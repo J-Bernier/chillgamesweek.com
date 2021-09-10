@@ -21,9 +21,14 @@ The base branch is `main`, it is protected and should not be committed to direct
 Request review from another dev as much as possible. A base template has to be created with a checklist to review before creating it
 
 ### Tags
-The tags are to be used as follows for now :
+The tags are to be used as follows for workflows :
     - needs review : if the pull request needs a review from another dev
     - reviewed : is reviewed, but still needs some fixes
     - ready for merge : is reviewed and validated, and ready to be merged on main
+
+Additional tags (self explanatory) :
+    - bug
+    - feature
+    - documentation
 
 Remember to switch tags after each review.
