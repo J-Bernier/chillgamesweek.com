@@ -35,10 +35,11 @@ up:
 down:
 	cd docker && docker-compose down
 
-#: Login with the functions container to retain login info
+#: Login with the firebase, then setup services
 .PHONY: functions_init
 functions_init:
 	cd docker && \
     docker-compose run firebase firebase login --no-localhost && \
+	docker-compose run firebase firebase init firestore && \
 	docker-compose run firebase firebase init functions && \
 	docker-compose rm --force

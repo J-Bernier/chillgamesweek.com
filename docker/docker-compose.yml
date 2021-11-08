@@ -4,7 +4,7 @@ services:
   firebase:
     build:
       context: ../apps/firebase
-    container_name: cgw-firebase-cf
+    container_name: cgw-firebase
     command: firebase emulators:start
     ports:
       - 4000:4000 # Emulator Suite UI
