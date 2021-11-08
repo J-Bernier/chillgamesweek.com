@@ -33,3 +33,11 @@ Additional tags (self explanatory) :
     - documentation
 
 Remember to switch tags after each review.
+
+## Tools
+
+This project uses a Makefile for useful commands. For Windows users, the easiest way is to install [Chocolatey](https://chocolatey.org/install), then install it with `choco install make`.
+
+## Getting Started
+
+To launch the docker stack, simply run `make functions_init`, then `make up`.
