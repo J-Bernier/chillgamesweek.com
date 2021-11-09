@@ -1,5 +1,8 @@
 version: "3.9"  # optional since v1.27.0
 
+networks:
+    backend:
+
 services:
   firebase:
     build:
@@ -17,3 +20,5 @@ services:
       - ../apps/firebase:/project
       - ../apps/firebase/bin/:/root/.cache:cached
       - ../apps/firebase/config/:/root/.config:cached
+    networks:
+        - backend
