@@ -40,6 +40,18 @@ down:
 functions_init:
 	cd docker && \
     docker-compose run firebase firebase login --no-localhost && \
-	docker-compose run firebase firebase init firestore && \
+	docker-compose run firebase firebase init database && \
 	docker-compose run firebase firebase init functions && \
 	docker-compose rm --force
+
+#: Add a functions package
+.PHONY: install_functions_pkg
+install_functions_pkg:
+	docker-compose run -w /project/functions firebase \
+		npm install $(ARGS) $(PKGS)
+
+#: Start hot reload mode for functions
+.PHONY: dev_functions
+dev_functions:
+	docker exec -d -w /project/functions cgw-firebase \
+		npm run dev
