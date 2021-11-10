@@ -40,4 +40,4 @@ This project uses a Makefile for useful commands. For Windows users, the easiest
 
 ## Getting Started
 
-To launch the docker stack, simply run `make functions_init`, then `make up`.
+To launch the docker stack, simply run `make firebase_init`, then `make up`.
