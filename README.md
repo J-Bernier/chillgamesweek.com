@@ -42,7 +42,7 @@ For REST Database calls, [Insomnia](https://insomnia.rest/) has been used. You c
 
 ## Getting Started
 
-To launch the docker stack, simply run `make firebase_init`, then `make up`.
+To launch the docker stack, simply run `make firebase_setup`, then `make up`.
 
 ## Troubleshooting
 
