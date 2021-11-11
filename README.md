@@ -38,6 +38,12 @@ Remember to switch tags after each review.
 
 This project uses a Makefile for useful commands. For Windows users, the easiest way is to install [Chocolatey](https://chocolatey.org/install), then install it with `choco install make`.
 
+For REST Database calls, [Insomnia](https://insomnia.rest/) has been used. You can import the library (Insomnia.Ink) located in the dev-tools folder.
+
 ## Getting Started
 
-To launch the docker stack, simply run `make functions_init`, then `make up`.
+To launch the docker stack, simply run `make firebase_init`, then `make up`.
+
+## Troubleshooting
+
+- If you can't see your data in the emulators, delete the localstorage values from your browser's memory management for localhost, then refresh. There is an issue without websockets fallback that uses the 0.0.0.0 adresse instead of localhost, inducing an error that prevents from recovering data. info : https://github.com/firebase/firebase-tools/issues/2870
