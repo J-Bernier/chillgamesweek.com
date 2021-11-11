@@ -38,6 +38,8 @@ Remember to switch tags after each review.
 
 This project uses a Makefile for useful commands. For Windows users, the easiest way is to install [Chocolatey](https://chocolatey.org/install), then install it with `choco install make`.
 
+For REST Database calls, [Insomnia](https://insomnia.rest/) has been used. You can import the library (Insomnia.Ink) located in the dev-tools folder.
+
 ## Getting Started
 
 To launch the docker stack, simply run `make firebase_init`, then `make up`.
