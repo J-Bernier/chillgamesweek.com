@@ -1,14 +1,10 @@
+import * as DatabaseFunctions from "./functions/database.functions";
+import * as RandomFunctions from "./functions/random.functions";
+import * as UserFunctions from "./functions/user.functions";
 
-// The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
-import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+admin.initializeApp();
 
-// import * as database from "fire"
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
+exports.database = DatabaseFunctions;
+exports.random = RandomFunctions;
+exports.user = UserFunctions;

@@ -59,7 +59,7 @@ firebase_setup:
 #: Add a functions package
 .PHONY: install_functions_pkg
 install_functions_pkg:
-	docker-compose run -w /project/functions firebase \
+	docker exec -w /project/functions cgw-firebase \
 		npm install $(ARGS) $(PKGS)
 
 #: Start hot reload mode for functions
@@ -67,3 +67,9 @@ install_functions_pkg:
 dev_functions:
 	docker exec -d -w /project/functions cgw-firebase \
 		npm run dev
+
+#: Start hot reload mode for functions
+.PHONY: build_functions
+build_functions:
+	docker exec -d -w /project/functions cgw-firebase \
+		npm run build

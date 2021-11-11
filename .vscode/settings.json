@@ -1,0 +1,12 @@
+{
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.format.enable": true,
+  "prettier.singleQuote": true,
+  "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+  },
+  "prettier.trailingComma": "all",
+}
