@@ -47,6 +47,7 @@ export const updateGroup = functions.database
         }
 
         // Remove group if no users are in it
+        // Note : This workload should be processed by a separate trigger on the /groups/{groupId}/users ref
         const groupUsers = await admin
             .database()
             .ref(`/groups/${newGroupName}/users`)
