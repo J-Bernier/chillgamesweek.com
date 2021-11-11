@@ -33,14 +33,19 @@ export const displayFull = functions.https.onRequest((req, res) => {
 export const insert = functions.https.onRequest((req, res) => {
     functions.logger.info("Invoking database-insert");
     const database = admin.database();
-    const value = req.query.value;
-    if (!value) {
-        res.status(400).json({ error: "Needs a value query param !" });
+    const key = req.query.key as string;
+    const value = req.query.value as string;
+    if (!value || !key) {
+        res.status(400).json({ error: "Needs a key and value query params !" });
         return;
     }
 
-    const testDocumentsRef = database.ref(`test_documents/${value}`);
-    return testDocumentsRef.set(true).then(() => {
-        res.json({ inserted: value });
+    const docRef = database.ref(key);
+    return docRef.set(value).then(() => {
+        res.json({
+            inserted: {
+                [key]: value,
+            },
+        });
     });
 });

@@ -11,6 +11,6 @@ export interface User {
     // Birthdate, format should be DD-MM-YYYY
     birthDate: string;
 
-    // Username
-    username: string;
+    // Group
+    group: string;
 }

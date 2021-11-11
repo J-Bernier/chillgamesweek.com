@@ -1,6 +1,6 @@
 import * as DatabaseFunctions from "./functions/database.functions";
 import * as RandomFunctions from "./functions/random.functions";
-import * as UserFunctions from "./functions/user.functions";
+import * as UserFunctions from "./functions/users.functions";
 
 import * as admin from "firebase-admin";
 admin.initializeApp();
