@@ -2,10 +2,10 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-const USER_REF = "users";
+const USERS_REF = "users";
 
 export const formatUserLastName = functions.database
-    .ref(`/${USER_REF}/{username}/lastName`)
+    .ref(`/${USERS_REF}/{username}/lastName`)
     .onWrite((snap) => {
         let lastName = snap.after.val() as string;
         if (lastName === null) {
@@ -15,7 +15,7 @@ export const formatUserLastName = functions.database
     });
 
 export const updateGroup = functions.database
-    .ref(`/${USER_REF}/{username}/group`)
+    .ref(`/${USERS_REF}/{username}/group`)
     .onWrite(async (snap, context) => {
         let previousGroupName = snap.before.exists()
             ? (snap.before.val() as string)
@@ -34,7 +34,7 @@ export const updateGroup = functions.database
         if (previousGroupName) {
             await admin
                 .database()
-                .ref(`/groups/${previousGroupName}/users/${username}`)
+                .ref(`/groups/${previousGroupName}/${USERS_REF}/${username}`)
                 .remove();
         }
 
@@ -42,15 +42,15 @@ export const updateGroup = functions.database
         if (newGroupName) {
             await admin
                 .database()
-                .ref(`/groups/${newGroupName}/users/${username}`)
+                .ref(`/groups/${newGroupName}/${USERS_REF}/${username}`)
                 .set(true);
         }
 
         // Remove group if no users are in it
-        // Note : This workload should be processed by a separate trigger on the /groups/{groupId}/users ref
+        // Note : This workload should be processed by a separate trigger on the /groups/{groupId}/${USERS_REF} ref
         const groupUsers = await admin
             .database()
-            .ref(`/groups/${newGroupName}/users`)
+            .ref(`/groups/${newGroupName}/${USERS_REF}`)
             .get();
 
         if (Object.keys(groupUsers).length === 0) {
