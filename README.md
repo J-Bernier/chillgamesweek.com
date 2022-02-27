@@ -46,4 +46,4 @@ To launch the docker stack, simply run `make firebase_setup`, then `make up`.
 
 ## Troubleshooting
 
-- If you can't see your data in the emulators, delete the localstorage values from your browser's memory management for localhost, then refresh. There is an issue without websockets fallback that uses the 0.0.0.0 adresse instead of localhost, inducing an error that prevents from recovering data. info : https://github.com/firebase/firebase-tools/issues/2870
+- If you can't see your data in the emulators, delete the localstorage values from your browser's memory management for localhost, then refresh. There is an issue without websockets fallback that uses the 0.0.0.0 adress instead of localhost, inducing an error that prevents from recovering data. info : https://github.com/firebase/firebase-tools/issues/2870
