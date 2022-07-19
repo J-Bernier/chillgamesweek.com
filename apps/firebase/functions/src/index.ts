@@ -8,3 +8,4 @@ admin.initializeApp();
 exports.database = DatabaseFunctions;
 exports.random = RandomFunctions;
 exports.user = UserFunctions;
+
