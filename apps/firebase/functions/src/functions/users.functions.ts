@@ -2,10 +2,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-const USER_REF = "users";
+const USERS_REF = "users";
+const GROUPS_REF = "groups";
 
 export const formatUserLastName = functions.database
-    .ref(`/${USER_REF}/{username}/lastName`)
+    .ref(`/${USERS_REF}/{username}/lastName`)
     .onWrite((snap) => {
         let lastName = snap.after.val() as string;
         if (lastName === null) {
@@ -15,12 +16,12 @@ export const formatUserLastName = functions.database
     });
 
 export const updateGroup = functions.database
-    .ref(`/${USER_REF}/{username}/group`)
+    .ref(`/${USERS_REF}/{username}/group`)
     .onWrite(async (snap, context) => {
-        let previousGroupName = snap.before.exists()
+        const previousGroupName = snap.before.exists()
             ? (snap.before.val() as string)
             : null;
-        let newGroupName = snap.after.exists()
+        const newGroupName = snap.after.exists()
             ? (snap.after.val() as string)
             : null;
         const username = context.params.username as string;
@@ -34,7 +35,9 @@ export const updateGroup = functions.database
         if (previousGroupName) {
             await admin
                 .database()
-                .ref(`/groups/${previousGroupName}/users/${username}`)
+                .ref(
+                    `/${GROUPS_REF}/${previousGroupName}/${USERS_REF}/${username}`
+                )
                 .remove();
         }
 
@@ -42,18 +45,21 @@ export const updateGroup = functions.database
         if (newGroupName) {
             await admin
                 .database()
-                .ref(`/groups/${newGroupName}/users/${username}`)
+                .ref(`/${GROUPS_REF}/${newGroupName}/${USERS_REF}/${username}`)
                 .set(true);
         }
 
         // Remove group if no users are in it
-        // Note : This workload should be processed by a separate trigger on the /groups/{groupId}/users ref
+        // Note : This workload should be processed by a separate trigger on the /${GROUPS_REF}/{groupId}/${USERS_REF} ref
         const groupUsers = await admin
             .database()
-            .ref(`/groups/${newGroupName}/users`)
+            .ref(`/${GROUPS_REF}/${newGroupName}/${USERS_REF}`)
             .get();
 
         if (Object.keys(groupUsers).length === 0) {
-            await admin.database().ref(`/groups/${newGroupName}`).remove();
+            await admin
+                .database()
+                .ref(`/${GROUPS_REF}/${newGroupName}`)
+                .remove();
         }
     });

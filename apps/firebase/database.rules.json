@@ -1,6 +1,29 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    "groups":{
+      ".read": true,
+      ".write": false
+    },
+    "users":{
+      ".read": true,
+      ".write": true,
+      "$username": {
+        "firstName": {
+          ".validate": "newData.isString() && newData.val().length <= 40"
+        },
+        "lastName": {
+          ".validate": "newData.isString() && newData.val().length <= 40"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().length <= 60"
+        },
+        "birthDate": {
+          ".validate": "newData.isString() && newData.val().matches(/^(0[1-9]|[12][0-9]|3[01])[-\\/. ](0[1-9]|1[012])[-\\/. ](19|20)[0-9][0-9]$/)"
+        },
+        "group": {
+          ".validate": "newData.isString()"
+        }
+      }
+    }
   }
 }
