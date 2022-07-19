@@ -11,6 +11,9 @@ export interface User {
     // Birthdate, format should be DD-MM-YYYY
     birthDate: string;
 
-    // Group
-    group: string;
+    // teams
+    teams: {
+        [team: string]: string;
+    };
 }
+

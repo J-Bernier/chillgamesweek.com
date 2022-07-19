@@ -1,6 +1,6 @@
 {
   "rules": {
-    "groups":{
+    "teams":{
       ".read": true,
       ".write": false
     },
@@ -8,11 +8,12 @@
       ".read": true,
       ".write": true,
       "$username": {
+        ".validate" : "newData.hasChildren(['firstName','lastName']) || data.exists()",
         "firstName": {
-          ".validate": "newData.isString() && newData.val().length <= 40"
+          ".validate": "newData.val() !== null && newData.isString() && newData.val().length <= 40"
         },
         "lastName": {
-          ".validate": "newData.isString() && newData.val().length <= 40"
+          ".validate": "newData.val() !== null && newData.isString() && newData.val().length <= 40"
         },
         "email": {
           ".validate": "newData.isString() && newData.val().length <= 60"
@@ -20,8 +21,13 @@
         "birthDate": {
           ".validate": "newData.isString() && newData.val().matches(/^(0[1-9]|[12][0-9]|3[01])[-\\/. ](0[1-9]|1[012])[-\\/. ](19|20)[0-9][0-9]$/)"
         },
-        "group": {
-          ".validate": "newData.isString()"
+        "teams": {
+          "$teamName": {
+            ".validate": "newData.isBoolean() && newData.val() === true"
+          }
+        },
+        "$other": {
+          ".validate": false
         }
       }
     }
