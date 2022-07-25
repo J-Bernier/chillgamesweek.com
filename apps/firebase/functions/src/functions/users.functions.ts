@@ -1,65 +1,59 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import {DB_TEAMS_REF, DB_USERS_REF} from "../const/const";
 
-const USERS_REF = "users";
-const GROUPS_REF = "groups";
-
+/**
+ * Updates the last name of a user on write
+ */
 export const formatUserLastName = functions.database
-    .ref(`/${USERS_REF}/{username}/lastName`)
-    .onWrite((snap) => {
-        let lastName = snap.after.val() as string;
-        if (lastName === null) {
-            return;
-        }
-        return snap.after.ref.set(lastName.toUpperCase());
+    .ref(`/${DB_USERS_REF}/{username}/lastName`)
+    .onUpdate(async (snap) => {
+      const lastName = snap.after.val() as string;
+      if (lastName === null) {
+        return;
+      }
+      return await snap.after.ref.set(lastName.toUpperCase());
     });
 
-export const updateGroup = functions.database
-    .ref(`/${USERS_REF}/{username}/group`)
-    .onWrite(async (snap, context) => {
-        const previousGroupName = snap.before.exists()
-            ? (snap.before.val() as string)
-            : null;
-        const newGroupName = snap.after.exists()
-            ? (snap.after.val() as string)
-            : null;
-        const username = context.params.username as string;
+/**
+ * Updates a team's list of users (or creates the team) whenever a user has a new team
+ */
+export const addTeam = functions.database
+    .ref(`/${DB_USERS_REF}/{username}/teams/{teamName}`)
+    .onCreate(async (snap, context) => {
+      const {username, teamName} = context.params as {[option: string]: string};
 
-        // No change
-        if (previousGroupName === newGroupName) {
-            return;
-        }
+      return await admin
+          .database()
+          .ref(`/${DB_TEAMS_REF}/${teamName}/${DB_USERS_REF}/${username}`)
+          .set(true);
+    });
 
-        // Update previous group
-        if (previousGroupName) {
-            await admin
-                .database()
-                .ref(
-                    `/${GROUPS_REF}/${previousGroupName}/${USERS_REF}/${username}`
-                )
-                .remove();
-        }
+/**
+ * Updates a team's list of users (and potentially delete the team) whenever a user leaves a new team
+ */
+export const removeTeam = functions.database
+    .ref(`/${DB_USERS_REF}/{username}/teams/{teamName}`)
+    .onDelete(async (snap, context) => {
+      const {username, teamName} = context.params as {[option: string]: string};
 
-        // Update new group
-        if (newGroupName) {
-            await admin
-                .database()
-                .ref(`/${GROUPS_REF}/${newGroupName}/${USERS_REF}/${username}`)
-                .set(true);
-        }
+      await admin
+          .database()
+          .ref(`/${DB_TEAMS_REF}/${teamName}/${DB_USERS_REF}/${username}`)
+          .remove();
 
-        // Remove group if no users are in it
-        // Note : This workload should be processed by a separate trigger on the /${GROUPS_REF}/{groupId}/${USERS_REF} ref
-        const groupUsers = await admin
+      // Delete team if empty
+      const teamUsers = await admin
+          .database()
+          .ref(`/${DB_TEAMS_REF}/${teamName}/${DB_USERS_REF}`)
+          .get();
+
+      if (Object.keys(teamUsers).length === 0) {
+        return await admin
             .database()
-            .ref(`/${GROUPS_REF}/${newGroupName}/${USERS_REF}`)
-            .get();
-
-        if (Object.keys(groupUsers).length === 0) {
-            await admin
-                .database()
-                .ref(`/${GROUPS_REF}/${newGroupName}`)
-                .remove();
-        }
+            .ref(`/${DB_TEAMS_REF}/${teamName}`)
+            .remove();
+      }
     });
+

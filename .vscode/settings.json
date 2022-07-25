@@ -1,11 +1,13 @@
 {
   "files.insertFinalNewline": true,
   "files.eol": "\n",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.format.enable": true,
   "prettier.singleQuote": true,
   "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint",
       "editor.formatOnSave": true
   },
   "prettier.trailingComma": "all",
