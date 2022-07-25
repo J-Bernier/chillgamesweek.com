@@ -62,13 +62,13 @@ install_functions_pkg:
 	docker exec -w /project/functions cgw-firebase \
 		npm install $(ARGS) $(PKGS)
 
-#: Start hot reload mode for functions
+#: Start hot reload mode for functions (needs running cgw-firebase)
 .PHONY: dev_functions
 dev_functions:
 	docker exec -d -w /project/functions cgw-firebase \
 		npm run dev
 
-#: Start hot reload mode for functions
+#: Build functions in container (needs running cgw-firebase)
 .PHONY: build_functions
 build_functions:
 	docker exec -d -w /project/functions cgw-firebase \
