@@ -1,11 +1,13 @@
-import * as DatabaseFunctions from "./functions/database.functions";
-import * as RandomFunctions from "./functions/random.functions";
-import * as UserFunctions from "./functions/users.functions";
-
 import * as admin from "firebase-admin";
-admin.initializeApp();
+admin.initializeApp(); // TODO: move that somewhere else ?
 
-exports.database = DatabaseFunctions;
-exports.random = RandomFunctions;
-exports.user = UserFunctions;
+import {AddUserController} from "./UserManagement/infrastructure/http/AddUser/AddUser.controller";
+import {DeleteUserController} from "./UserManagement/infrastructure/http/DeleteUser/DeleteUser.controller";
+import {GetUserController} from "./UserManagement/infrastructure/http/GetUser.controller.ts/GetUser.controller";
+
+exports.user = {
+  add: AddUserController,
+  delete: DeleteUserController,
+  get: GetUserController,
+};
 
