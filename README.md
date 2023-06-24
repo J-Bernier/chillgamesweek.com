@@ -23,26 +23,36 @@ Request review from another dev as much as possible. A base template has to be c
 
 ### Tags
 The tags are to be used as follows for workflows :
-    - needs review : if the pull request needs a review from another dev
-    - reviewed : is reviewed, but still needs some fixes
-    - ready for merge : is reviewed and validated, and ready to be merged on main
+
+- needs review : if the pull request needs a review from another dev
+- reviewed : is reviewed, but still needs some fixes
+- ready for merge : is reviewed and validated, and ready to be merged on main
 
 Additional tags (self explanatory) :
-    - bug
-    - feature
-    - documentation
+
+- bug
+- feature
+- documentation
 
 Remember to switch tags after each review.
 
 ## Tools
 
-This project uses a Makefile for useful commands. For Windows users, the easiest way is to install [Chocolatey](https://chocolatey.org/install), then install it with `choco install make`.
+This project uses a Makefile for useful commands. Run `make` at project root to get a list of all available commands. 
+
+We recommend the use of nvm for Node.js version management. A .nvmrc file is present at folder root, which indicates the version currently used for the project. If you have nvm installed, simply run `nvm use` at folder root to update to correct version.
 
 For REST Database calls, [Insomnia](https://insomnia.rest/) has been used. You can import the library (Insomnia.Ink) located in the dev-tools folder.
 
 ## Getting Started
 
-To launch the docker stack, simply run `make firebase_setup`, then `make up`.
+This project uses firebase-tools and firebase CLI, install it first by following the official google documentation : https://firebase.google.com/docs/cli#install_the_firebase_cli.
+
+You will also need a google account validated by the project administrators, for which access has been granted to the firebase project.
+
+To install the project and run the emulators, simply run `make setup`, and follow the instructions.
+
+You should be able to then run `make emulators` and `make dev` to run the project locally.
 
 ## Troubleshooting
 

@@ -21,8 +21,9 @@ export const formatUserLastName = functions.database
  */
 export const addTeam = functions.database
     .ref(`/${DB_USERS_REF}/{username}/teams/{teamName}`)
-    .onCreate(async (snap, context) => {
+    .onCreate(async (_snap, context) => {
       const {username, teamName} = context.params as {[option: string]: string};
+      console.log("test");
 
       return await admin
           .database()
@@ -35,7 +36,7 @@ export const addTeam = functions.database
  */
 export const removeTeam = functions.database
     .ref(`/${DB_USERS_REF}/{username}/teams/{teamName}`)
-    .onDelete(async (snap, context) => {
+    .onDelete(async (_snap, context) => {
       const {username, teamName} = context.params as {[option: string]: string};
 
       await admin
