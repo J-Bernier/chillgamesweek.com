@@ -28,6 +28,6 @@ module.exports = {
   rules: {
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
-    "max-len": ["error", 120],
+    "max-len": ["error", 150],
   },
 };

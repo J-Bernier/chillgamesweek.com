@@ -6,8 +6,11 @@ type User = {
   email: string;
   birthDate?: string;
   teams: {
-      [teamName: string]: string;
+    [teamName: string]: boolean;
   };
+  games: {
+    [gameId: string]: boolean;
+  }
 }
 
 export type {User};
