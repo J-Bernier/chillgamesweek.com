@@ -13,7 +13,11 @@ type AddUserDependencies = {
 const addUserCreator = ({userRepository}: AddUserDependencies): AddUserUseCase => async (request: AddUserRequest) => {
   const userToAdd = request;
 
-  await userRepository.save(userToAdd);
+  await userRepository.save({
+    ...userToAdd,
+    inGame: false,
+    games: {},
+  });
 
   return true;
 };

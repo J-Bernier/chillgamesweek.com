@@ -1,7 +1,8 @@
 import * as functions from "firebase-functions";
+
+import {createDb} from "../../../../common/infrastructure/createDb";
 import {addUserCreator} from "../../../application/usecases/AddUser/AddUser";
 import {userRepositoryCreator} from "../../database/User/UserRepository";
-import {createDb} from "../../../../common/infrastructure/createDb";
 
 
 const db = createDb();

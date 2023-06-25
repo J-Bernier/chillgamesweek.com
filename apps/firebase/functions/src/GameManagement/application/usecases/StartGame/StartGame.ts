@@ -1,4 +1,5 @@
 import {randomUUID} from "crypto";
+
 import {UseCase} from "../../../../common/domain/model/UseCase";
 import {GameInstanceRepositoryInterface} from "../../../domain/infrastructure/persistence/GameInstanceRepositoryInterface";
 import {UserRepositoryInterface} from "../../../domain/infrastructure/persistence/UserRepositoryInterface";
@@ -14,7 +15,10 @@ type StartGameDependencies = {
 };
 
 const startGameCreator =
-    ({gameInstanceRepository, userRepository}: StartGameDependencies): StartGameUseCase =>
+    ({
+      gameInstanceRepository,
+      userRepository,
+    }: StartGameDependencies): StartGameUseCase =>
       async (request: StartGameRequest) => {
         const gameToCreate = request;
 
@@ -22,11 +26,12 @@ const startGameCreator =
 
         await gameInstanceRepository.save({
           ...gameToCreate,
+          status: "started",
           id,
         });
 
         for (const userId of Object.keys(gameToCreate.players)) {
-          await userRepository.addGame(userId, id);
+          await userRepository.startGame(userId, id);
         }
 
         return id;

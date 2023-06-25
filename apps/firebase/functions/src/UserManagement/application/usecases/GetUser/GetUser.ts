@@ -3,7 +3,7 @@ import {User} from "../../../domain/model/User";
 import {UserRepositoryInterface} from "../../../domain/persistence/UserRepository.interface";
 
 type GetUserRequest = {
-  userId: string;
+    userId: string;
 };
 type GetUserResponse = User;
 type GetUserUseCase = UseCase<GetUserRequest, GetUserResponse>;

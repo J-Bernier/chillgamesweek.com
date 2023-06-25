@@ -11,6 +11,7 @@ module.exports = {
     "plugin:import/typescript",
     "google",
     "plugin:@typescript-eslint/recommended",
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -24,10 +25,15 @@ module.exports = {
   plugins: [
     "@typescript-eslint",
     "import",
+    "simple-import-sort"
   ],
   rules: {
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
-    "max-len": ["error", 150],
+    "max-len": ["error", 200],
+    '@typescript-eslint/no-empty-function': 'off',
+    yoda: ['error', 'never'],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error'
   },
 };

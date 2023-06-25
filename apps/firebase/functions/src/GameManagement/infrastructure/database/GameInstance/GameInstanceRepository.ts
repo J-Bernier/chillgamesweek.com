@@ -1,6 +1,7 @@
 import {Database} from "firebase-admin/database";
-import {GameInstance} from "../../../domain/model/GameInstance";
+
 import {GameInstanceRepositoryInterface} from "../../../domain/infrastructure/persistence/GameInstanceRepositoryInterface";
+import {GameInstance, Results} from "../../../domain/model/GameInstance";
 
 const GAME_INSTANCES_REF = "gameInstances";
 
@@ -22,6 +23,12 @@ const gameInstanceRepositoryCreator = ({db}: Dependencies): GameInstanceReposito
     const docRef = db.ref(`${GAME_INSTANCES_REF}/${id}`);
     const data = await docRef.get();
     return data.val();
+  },
+  finish: async (gameId: string, results: Results) => {
+    const gameStatusRef = db.ref(`${GAME_INSTANCES_REF}/${gameId}/status`);
+    await gameStatusRef.set("finished");
+    const gameResultsRef = db.ref(`${GAME_INSTANCES_REF}/${gameId}/results`);
+    await gameResultsRef.set(results);
   },
 });
 

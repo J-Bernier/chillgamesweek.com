@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 
 import {createDb} from "../../../../common/infrastructure/createDb";
-import {startGameCreator} from "../../../application/usecases/StartGame/StartGame";
+import {finishGameCreator} from "../../../application/usecases/FinishGame/FinishGame";
 import {gameInstanceRepositoryCreator} from "../../database/GameInstance/GameInstanceRepository";
 import {userRepositoryCreator} from "../../database/UserRepository/UserRepository";
 
@@ -9,14 +9,14 @@ import {userRepositoryCreator} from "../../database/UserRepository/UserRepositor
 const db = createDb();
 const userRepository = userRepositoryCreator({db});
 const gameInstanceRepository = gameInstanceRepositoryCreator({db});
-const startGameUseCase = startGameCreator({gameInstanceRepository, userRepository});
+const finishGameUseCase = finishGameCreator({gameInstanceRepository, userRepository});
 
-const StartGameController = functions.https.onRequest(async (req, res) => {
+const FinishGameController = functions.https.onRequest(async (req, res) => {
   // TODO: validate input
-  const gameId = await startGameUseCase(req.body);
+  await finishGameUseCase(req.body);
   res.json({
-    gameId,
+    acknowledged: true,
   });
 });
 
-export {StartGameController};
+export {FinishGameController};
